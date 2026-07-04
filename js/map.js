@@ -18,6 +18,14 @@ export function createGuessMap(containerId) {
   let marker = null;
   let onGuess = null;
 
+  // Rámutatásra kinyílik a térkép, hogy pontosabban lehessen tippelni.
+  const container = document.getElementById(containerId);
+  container.addEventListener("mouseenter", () => container.classList.add("expanded"));
+  container.addEventListener("mouseleave", () => container.classList.remove("expanded"));
+  container.addEventListener("transitionend", (e) => {
+    if (e.propertyName === "height") map.invalidateSize();
+  });
+
   map.on("click", (e) => {
     setMarker(e.latlng.lat, e.latlng.lng);
     if (onGuess) onGuess(e.latlng.lat, e.latlng.lng);

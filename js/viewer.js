@@ -95,7 +95,8 @@ function goToCurrentScene() {
   if (!viewerInstance) return;
   const yaw = viewerInstance.getYaw();
   const pitch = viewerInstance.getPitch();
-  viewerInstance.loadScene(`s${currentSceneIndex}`, pitch, yaw);
+  const hfov = viewerInstance.getHfov();
+  viewerInstance.loadScene(`s${currentSceneIndex}`, pitch, yaw, hfov);
   notifySceneChange();
 }
 

@@ -12,7 +12,7 @@ let currentRoundIndex = 0;
 let totalScore = 0;
 let roundResults = [];
 let currentGuess = null;
-let lastSceneState = { index: 0, total: 0, isEmbed: false };
+let gameActive = false;
 
 let guessMapCtrl = null;
 let revealMapCtrl = null;
@@ -69,12 +69,36 @@ function updateHeaderScore() {
   el("round-running-score").textContent = String(totalScore);
 }
 
+function animateNumber(element, to, duration, suffix = "") {
+  const start = performance.now();
+  function frame(now) {
+    const t = Math.min(1, (now - start) / duration);
+    const eased = 1 - Math.pow(1 - t, 3);
+    element.textContent = Math.round(to * eased) + suffix;
+    if (t < 1) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+
+function preloadNextLocation() {
+  const next = roundLocations[currentRoundIndex + 1];
+  if (!next) return;
+  const urls = [];
+  if (next.scenes && next.scenes.length) urls.push(next.scenes[0]);
+  if (next.revealImage) urls.push(next.revealImage);
+  urls.forEach((url) => {
+    const img = new Image();
+    img.src = url;
+  });
+}
+
 function startGame() {
   const count = parseInt(el("round-count").value, 10);
   roundLocations = shuffle(allLocations).slice(0, count);
   currentRoundIndex = 0;
   totalScore = 0;
   roundResults = [];
+  gameActive = true;
 
   el("header-score").classList.remove("hidden");
   updateHeaderScore();
@@ -99,7 +123,6 @@ function loadRound() {
 }
 
 function handleSceneChange(state) {
-  lastSceneState = state;
   const nav = el("viewer-nav");
   if (state.isEmbed) {
     nav.classList.add("hidden");
@@ -145,9 +168,9 @@ function showReveal(location, score) {
   setResultRow("line", score.lineCorrect, score.linePoints);
 
   el("score-distance-result").textContent = `${Math.round(score.distanceKm)} km`;
-  el("score-distance-result").className = "result-tag";
+  el("score-distance-result").className = "result-tag neutral";
   el("score-distance-points").textContent = `+${score.distancePoints}`;
-  el("score-round-total").textContent = `${score.total} pont`;
+  animateNumber(el("score-round-total"), score.total, 900, " pont");
 
   const guess = currentGuess;
   showScreen("screen-reveal");
@@ -160,6 +183,7 @@ function showReveal(location, score) {
       guessLng: guess.lng,
     });
   });
+  preloadNextLocation();
 }
 
 function nextRound() {
@@ -173,17 +197,26 @@ function nextRound() {
 }
 
 function showFinal() {
+  gameActive = false;
   el("header-score").classList.add("hidden");
-  el("final-score-value").textContent = String(totalScore);
+  animateNumber(el("final-score-value"), totalScore, 1200);
 
   const container = el("final-summary");
   container.innerHTML = "";
   roundResults.forEach((result) => {
+    const { location, score } = result;
     const row = document.createElement("div");
     row.className = "final-summary-row";
     row.innerHTML = `
-      <div class="name">${result.location.name}<small>${result.location.country}</small></div>
-      <div class="points">${result.score.total} pont</div>
+      <div class="name">${location.name}
+        <small>
+          ${location.country} ·
+          <span class="mini ${score.countryCorrect ? "good" : "bad"}">${score.countryCorrect ? "✓" : "✗"} ország</span>
+          <span class="mini ${score.lineCorrect ? "good" : "bad"}">${score.lineCorrect ? "✓" : "✗"} vonal</span>
+          <span class="mini neutral">${Math.round(score.distanceKm)} km</span>
+        </small>
+      </div>
+      <div class="points">${score.total} pont</div>
     `;
     container.appendChild(row);
   });
@@ -193,6 +226,25 @@ function showFinal() {
 
 function restartToStart() {
   showScreen("screen-start");
+}
+
+function handleKeydown(e) {
+  const activeTag = document.activeElement ? document.activeElement.tagName : "";
+  const isTyping = activeTag === "INPUT" || activeTag === "SELECT" || activeTag === "TEXTAREA";
+
+  if (!el("screen-reveal").classList.contains("hidden")) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      nextRound();
+    }
+    return;
+  }
+
+  if (!el("screen-round").classList.contains("hidden") && !isTyping) {
+    const key = e.key.toLowerCase();
+    if (key === "w" || key === "e") viewer.stepNext();
+    if (key === "s" || key === "h") viewer.stepPrev();
+  }
 }
 
 async function init() {
@@ -218,6 +270,11 @@ async function init() {
   el("btn-submit-guess").addEventListener("click", submitGuess);
   el("btn-next-round").addEventListener("click", nextRound);
   el("btn-restart").addEventListener("click", restartToStart);
+
+  document.addEventListener("keydown", handleKeydown);
+  window.addEventListener("beforeunload", (e) => {
+    if (gameActive) e.preventDefault();
+  });
 }
 
 init().catch((err) => {

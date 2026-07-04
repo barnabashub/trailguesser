@@ -18,7 +18,8 @@ node server.js
 ```
 
 vagy dupla kattintás a `start.sh` (Linux/macOS) / `start.bat` (Windows)
-fájlra. Ezután nyisd meg böngészőben: **http://localhost:8080**
+fájlra — ezek a böngészőt is automatikusan megnyitják. Kézzel indított
+szervernél nyisd meg böngészőben: **http://localhost:8080**
 
 Internetkapcsolat szükséges a térkép (OpenStreetMap csempék) betöltéséhez, és
 akkor is, ha élő Mapillary/KartaView beágyazást használsz. A 360°-os képek és
@@ -152,11 +153,14 @@ Egy kör maximum 8000 pont. A végén az összes kör pontszáma összeadódik.
 
 1. **Kezdőképernyő** – hány helyszínnel szeretnél játszani.
 2. **Helyszín képernyő** – nézz körbe a 360°-os képen (húzd az egérrel),
-   lépkedj előre/hátra a gombokkal, válaszd ki az országot és a vonal nevét
-   (legördülő javaslatokból), majd kattints a térképre, ahova tippelsz.
-   A "Tippet beküld" gomb csak akkor aktív, ha helyeztél tippet a térképre.
+   lépkedj előre/hátra a gombokkal vagy a `W`/`S` billentyűkkel, válaszd ki
+   az országot és a vonal nevét (legördülő javaslatokból), majd kattints a
+   térképre, ahova tippelsz. A térkép rámutatásra kinagyítódik, hogy
+   pontosabban lehessen célozni. A "Tippet beküld" gomb csak akkor aktív,
+   ha helyeztél tippet a térképre.
 3. **Megoldás képernyő** – megjelenik a helyszínt bemutató kép, a valós és a
-   tippelt pont a térképen, illetve a pontszám bontása.
+   tippelt pont a térképen, illetve a pontszám bontása. Az `Enter`
+   billentyűvel is tovább lehet lépni a következő helyszínre.
 4. **Végeredmény** – az összpontszám és helyszínenkénti bontás, valamint
    lehetőség új játék indítására.
 
