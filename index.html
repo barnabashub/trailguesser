@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TrailGuesser – Találd ki a vasútvonalat!</title>
+<link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css" />
+<link rel="stylesheet" href="assets/vendor/pannellum/pannellum.css" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<header class="app-header">
+  <div class="brand">
+    <span class="brand-icon" aria-hidden="true">🚆</span>
+    <span class="brand-name">TrailGuesser</span>
+  </div>
+  <div id="header-score" class="header-score hidden">Pontszám: <strong id="header-score-value">0</strong></div>
+</header>
+
+<main id="app">
+
+  <!-- START SCREEN -->
+  <section id="screen-start" class="screen">
+    <div class="panel start-panel">
+      <h1>Találd ki a vasútvonalat!</h1>
+      <p class="lead">
+        Nézz körbe a 360°-os képen, lépkedj előre-hátra a síneken, majd tippeld meg,
+        melyik országban és melyik vasútvonalon járunk — minél pontosabb a helymeghatározásod,
+        annál több pontot kapsz.
+      </p>
+
+      <div class="start-options">
+        <label for="round-count">Hány helyszínnel játsszunk?</label>
+        <select id="round-count"></select>
+      </div>
+
+      <button id="btn-start" class="btn btn-primary btn-large">Játék indítása</button>
+
+      <ol class="how-to">
+        <li>Húzd a képet a körbenézéshez, a nyíl gombokkal pedig lépkedj a vonalon.</li>
+        <li>Válaszd ki az országot, add meg a vasútvonal nevét, és kattints a térképre a helyre tippelve.</li>
+        <li>Küldd be a tippet, nézd meg a helyes megoldást és a pontszámot.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ROUND SCREEN -->
+  <section id="screen-round" class="screen hidden">
+    <div class="round-topbar">
+      <div class="round-progress">Helyszín <span id="round-index">1</span> / <span id="round-total">10</span></div>
+      <div class="round-total-score">Összpontszám: <strong id="round-running-score">0</strong></div>
+    </div>
+
+    <div class="round-layout">
+      <div class="viewer-area">
+        <div id="viewer-panorama" class="viewer-panorama"></div>
+        <div id="viewer-embed-wrap" class="viewer-embed-wrap hidden">
+          <iframe id="viewer-embed" class="viewer-embed" title="Élő 360° nézegető" allow="fullscreen" allowfullscreen></iframe>
+        </div>
+        <div id="viewer-nav" class="viewer-nav">
+          <button id="btn-scene-prev" class="btn btn-nav" title="Lépés hátra">◀ Hátra</button>
+          <span id="scene-indicator" class="scene-indicator">1 / 3</span>
+          <button id="btn-scene-next" class="btn btn-nav" title="Lépés előre">Előre ▶</button>
+        </div>
+      </div>
+
+      <aside class="guess-panel">
+        <div class="guess-field">
+          <label for="input-country">Ország</label>
+          <input id="input-country" list="datalist-country" autocomplete="off" placeholder="Kezdj el gépelni…" />
+          <datalist id="datalist-country"></datalist>
+        </div>
+
+        <div class="guess-field">
+          <label for="input-line">Vasútvonal neve</label>
+          <input id="input-line" list="datalist-line" autocomplete="off" placeholder="Kezdj el gépelni…" />
+          <datalist id="datalist-line"></datalist>
+        </div>
+
+        <div class="guess-field">
+          <label>Helyszín a térképen</label>
+          <div id="guess-map" class="guess-map"></div>
+          <p class="hint">Kattints a térképre, ahova tippelsz!</p>
+        </div>
+
+        <button id="btn-submit-guess" class="btn btn-primary btn-large" disabled>Tippet beküld</button>
+      </aside>
+    </div>
+  </section>
+
+  <!-- REVEAL SCREEN -->
+  <section id="screen-reveal" class="screen hidden">
+    <div class="reveal-layout">
+      <div class="reveal-image-col">
+        <img id="reveal-image" class="reveal-image" alt="A helyszín" />
+        <div class="reveal-title">
+          <h2 id="reveal-name"></h2>
+          <p id="reveal-country"></p>
+        </div>
+      </div>
+
+      <div class="reveal-info-col">
+        <div id="reveal-map" class="reveal-map"></div>
+
+        <div class="score-breakdown">
+          <div class="score-row">
+            <span>Ország</span>
+            <span id="score-country-result" class="result-tag"></span>
+            <span id="score-country-points" class="result-points"></span>
+          </div>
+          <div class="score-row">
+            <span>Vasútvonal</span>
+            <span id="score-line-result" class="result-tag"></span>
+            <span id="score-line-points" class="result-points"></span>
+          </div>
+          <div class="score-row">
+            <span>Távolság</span>
+            <span id="score-distance-result" class="result-tag"></span>
+            <span id="score-distance-points" class="result-points"></span>
+          </div>
+          <div class="score-row score-row-total">
+            <span>Kör pontszáma</span>
+            <span></span>
+            <span id="score-round-total" class="result-points"></span>
+          </div>
+        </div>
+
+        <button id="btn-next-round" class="btn btn-primary btn-large">Következő helyszín</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL SCREEN -->
+  <section id="screen-final" class="screen hidden">
+    <div class="panel final-panel">
+      <h1>Vége a játéknak!</h1>
+      <p class="final-score">Összpontszám: <strong id="final-score-value">0</strong></p>
+      <div id="final-summary" class="final-summary"></div>
+      <button id="btn-restart" class="btn btn-primary btn-large">Új játék indítása</button>
+    </div>
+  </section>
+
+</main>
+
+<script src="assets/vendor/leaflet/leaflet.js"></script>
+<script src="assets/vendor/pannellum/pannellum.js"></script>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

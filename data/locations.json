@@ -1,0 +1,132 @@
+[
+  {
+    "id": "loc01",
+    "name": "Bernina-vasútvonal",
+    "country": "Svájc",
+    "lat": 46.4172,
+    "lng": 10.0138,
+    "scenes": [
+      "assets/locations/loc01/scene1.jpg",
+      "assets/locations/loc01/scene2.jpg",
+      "assets/locations/loc01/scene3.jpg"
+    ],
+    "revealImage": "assets/locations/loc01/reveal.jpg"
+  },
+  {
+    "id": "loc02",
+    "name": "Flåm-vasútvonal",
+    "country": "Norvégia",
+    "lat": 60.8607,
+    "lng": 7.1097,
+    "scenes": [
+      "assets/locations/loc02/scene1.jpg",
+      "assets/locations/loc02/scene2.jpg",
+      "assets/locations/loc02/scene3.jpg"
+    ],
+    "revealImage": "assets/locations/loc02/reveal.jpg"
+  },
+  {
+    "id": "loc03",
+    "name": "Semmering-vasútvonal",
+    "country": "Ausztria",
+    "lat": 47.6219,
+    "lng": 15.8264,
+    "scenes": [
+      "assets/locations/loc03/scene1.jpg",
+      "assets/locations/loc03/scene2.jpg",
+      "assets/locations/loc03/scene3.jpg"
+    ],
+    "revealImage": "assets/locations/loc03/reveal.jpg"
+  },
+  {
+    "id": "loc04",
+    "name": "Albula-vasútvonal",
+    "country": "Svájc",
+    "lat": 46.6825,
+    "lng": 9.8402,
+    "scenes": [
+      "assets/locations/loc04/scene1.jpg",
+      "assets/locations/loc04/scene2.jpg",
+      "assets/locations/loc04/scene3.jpg"
+    ],
+    "revealImage": "assets/locations/loc04/reveal.jpg"
+  },
+  {
+    "id": "loc05",
+    "name": "Tauern-vasútvonal",
+    "country": "Ausztria",
+    "lat": 47.1167,
+    "lng": 13.2,
+    "scenes": [
+      "assets/locations/loc05/scene1.jpg",
+      "assets/locations/loc05/scene2.jpg",
+      "assets/locations/loc05/scene3.jpg"
+    ],
+    "revealImage": "assets/locations/loc05/reveal.jpg"
+  },
+  {
+    "id": "loc06",
+    "name": "Tátrai Elektromos Vasút",
+    "country": "Szlovákia",
+    "lat": 49.1225,
+    "lng": 20.0611,
+    "scenes": [
+      "assets/locations/loc06/scene1.jpg",
+      "assets/locations/loc06/scene2.jpg",
+      "assets/locations/loc06/scene3.jpg"
+    ],
+    "revealImage": "assets/locations/loc06/reveal.jpg"
+  },
+  {
+    "id": "loc07",
+    "name": "Budapesti Gyermekvasút",
+    "country": "Magyarország",
+    "lat": 47.5074,
+    "lng": 18.9647,
+    "scenes": [
+      "assets/locations/loc07/scene1.jpg",
+      "assets/locations/loc07/scene2.jpg",
+      "assets/locations/loc07/scene3.jpg"
+    ],
+    "revealImage": "assets/locations/loc07/reveal.jpg"
+  },
+  {
+    "id": "loc08",
+    "name": "Fekete-erdő-vasútvonal",
+    "country": "Németország",
+    "lat": 48.1272,
+    "lng": 8.2311,
+    "scenes": [
+      "assets/locations/loc08/scene1.jpg",
+      "assets/locations/loc08/scene2.jpg",
+      "assets/locations/loc08/scene3.jpg"
+    ],
+    "revealImage": "assets/locations/loc08/reveal.jpg"
+  },
+  {
+    "id": "loc09",
+    "name": "La Mure-vasútvonal",
+    "country": "Franciaország",
+    "lat": 44.9,
+    "lng": 5.7936,
+    "scenes": [
+      "assets/locations/loc09/scene1.jpg",
+      "assets/locations/loc09/scene2.jpg",
+      "assets/locations/loc09/scene3.jpg"
+    ],
+    "revealImage": "assets/locations/loc09/reveal.jpg"
+  },
+  {
+    "id": "loc10",
+    "name": "Cinque Terre-vasútvonal",
+    "country": "Olaszország",
+    "lat": 44.1075,
+    "lng": 9.7256,
+    "scenes": [
+      "assets/locations/loc10/scene1.jpg",
+      "assets/locations/loc10/scene2.jpg",
+      "assets/locations/loc10/scene3.jpg"
+    ],
+    "revealImage": "assets/locations/loc10/reveal.jpg"
+  }
+]
